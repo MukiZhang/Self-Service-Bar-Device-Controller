@@ -1,0 +1,1 @@
+GateId(chair 0) DeviceId(char 0) type ip ID(1001)

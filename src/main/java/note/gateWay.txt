@@ -1,0 +1,2 @@
+GATEid ip           type
+G001   192.168.1.10 light

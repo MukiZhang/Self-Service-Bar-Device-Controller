@@ -1,5 +1,10 @@
-package Message_;
-
+package FIles;
+/**
+ * Title: ip_id_type.java
+ * Description: this class is object of the gateway it contain the information of the ip_id_type.txt.
+ * @author Jie Ji
+ * @version 1.0
+ */
 public class ip_id_type {
     int deviceNo;
     String IP;
@@ -10,7 +15,7 @@ public class ip_id_type {
     public ip_id_type() {
     }
 
-    public ip_id_type(int deviceNo, String IP, int port, String deviceID, String type) {
+    public ip_id_type(int deviceNo, String IP,int port, String deviceID, String type) {
         this.deviceNo = deviceNo;
         this.IP = IP;
         this.port = port;
@@ -61,6 +66,6 @@ public class ip_id_type {
     @Override
     public String toString() {
         return
-                deviceNo + " " + IP + " " + port + " " + deviceID + " " + type;
+                deviceNo +" " + IP +" " + port +" " + deviceID +" " + type ;
     }
 }

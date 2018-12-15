@@ -1,65 +1,76 @@
 package Devices;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
-public class Device extends BasicFunction {
 
-    public Device() {
+/**
+ * Title: Device.java
+ * Description: this class is the father class of the Light, Gate and Chair. It contains main method to control the devices.
+ * @author Jie Ji
+ * @version 1.0
+ */
+public interface Device   {
+    /**
+     * this method is used to find devices in the system
+     * @param infos it is information of the device was already in the system
+     * @return the new device info
+     */
+    ArrayList<Map<String,String>> searchD(ArrayList<String> infos);
 
-    }
+    /**
+     * this method is used to add new device in the system
+     * @return the result of add the device
+     */
+    boolean AddNewD() ;
 
-    public ArrayList<Map<String, String>> searchD(ArrayList<String> infos) {
-        ArrayList<Map<String, String>> nweIDs = new ArrayList<>();
+    /**
+     * this method is used to delete device in the system
+     * @param ids the device which need to delete
+     * @return the result of delete the device
+     */
+    boolean delateD(String ids);
 
-        return nweIDs;
-    }
+    /**
+     * this method is used to open device in the system
+     * @param ids the device which need to be opened
+     * @return the result of opene the device
+     */
+    boolean openD(String ids) ;
 
-    public boolean AddNewD() {
-        ArrayList<String> infos = new ArrayList<>();
-        ArrayList<Map<String, String>> ids = searchD(infos);
+    /**
+     *  this method is used to close device in the system
+     * @param ids the device which need to be closed
+     * @return the result of close the device
+     */
+    boolean closeD(String ids);
 
-        return true;
-    }
+    /**
+     * this method is used to delete devices in the system
+     * @param ids the devicea which need to delete
+     * @return the result of delete the devices
+     */
+    Map delateDs(ArrayList<String> ids);
 
-    public boolean delateD(String ids) {
+    /**
+     * this method is used to open devices in the system
+     * @param ids the devicea which need to be opened
+     * @return the result of open the devices
+     */
+    Map openDs(ArrayList<String> ids);
 
-        return true;
-    }
+    /**
+     * this method is used to close devices in the system
+     * @param ids the devices which need to be closed
+     * @return the result of close the devices
+     */
+    Map closeDs(ArrayList<String> ids);
 
-    public boolean openD(String ids) {
-
-        return true;
-    }
-
-    public boolean closeD(String ids) {
-        return true;
-    }
-
-    public Map delateDs(ArrayList<String> ids) {
-        Map<String, Boolean> result = new HashMap<>();
-        return result;
-    }
-
-    public Map openDs(ArrayList<String> ids) {
-        Map<String, Boolean> result = new HashMap<>();
-        return result;
-    }
-
-    public Map closeDs(ArrayList<String> ids) {
-        Map<String, Boolean> result = new HashMap<>();
-        return result;
-    }
-
-    //need refine
-    public Map getState(ArrayList<String> ids, String type) {
-        Map state = new HashMap();
-        ArrayList<String> lines = readFiles(respouncse_file);
-        for (String line : lines) {
-
-        }
-        return state;
-    }
+    /**
+     * this method is used to get the state of devices in the system
+     * @param id the device which need to get recent state
+     * @param type the type of device - light/chair/gate
+     * @return the state of the device
+     */
+    Map<String,String> getRecentState(int id, String type);
 
 }

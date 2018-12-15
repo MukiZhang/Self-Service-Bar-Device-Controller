@@ -8,12 +8,26 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.Socket;
 
+/**
+ * Title: Client.java
+ * Description: this class is used to act as an client of the gateWay to send control and require message
+ * @author Jie Ji
+ * @version 1.0
+ */
 public class Clinet {
     static private int MAX = 1024;
 
     public Clinet() {
     }
 
+    /**
+     * this method is used to broad cast message to the server in UDP protocol
+     * @param host the server ip
+     * @param port the port of the server
+     * @param message the message used to send to the gateway
+     * @return the respounce message
+     * @throws IOException
+     */
     public String BroadCast(String host, int port, String message) throws IOException {
         /*
          * 向服务器端发送数据
@@ -49,6 +63,13 @@ public class Clinet {
         return reply;
     }
 
+    /**
+     * this method is used to unicast message to the server in TCP protocol
+     * @param ip the server ip
+     * @param port the port of the server
+     * @param messaget he respounce message
+     * @return
+     */
     public String unicast(String ip, int port, String message) {
         InputStream in = null;
         OutputStream out = null;
@@ -111,6 +132,11 @@ public class Clinet {
         return result;
     }
 
+    /**
+     * this method is used to get the useful message from the respounce
+     * @param mes the respounce from server
+     * @return
+     */
     String getMessage(String mes) {
         String newM = null;
         String[] a = mes.split("}");

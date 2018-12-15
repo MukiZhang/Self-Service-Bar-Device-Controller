@@ -1,5 +1,10 @@
-package Message_;
-
+package FIles;
+/**
+ * Title: Respounce.java
+ * Description: this class is object of the gateway it contain the information of the Respounce.txt.
+ * @author Jie Ji
+ * @version 1.0
+ */
 public class Respounce {
     int deviceNo;
     String type;
@@ -11,7 +16,7 @@ public class Respounce {
     public Respounce() {
     }
 
-    public Respounce(int deviceNo, String type, int result, String respounceInfo, int reType, String date) {
+    public Respounce(int deviceNo, String type, int result, String respounceInfo, int reType,String date) {
         this.deviceNo = deviceNo;
         this.type = type;
         this.result = result;
@@ -70,6 +75,6 @@ public class Respounce {
 
     @Override
     public String toString() {
-        return deviceNo + " " + type + " " + result + " " + respounceInfo + " " + reType;
+        return  deviceNo +" " + type + " " + result +" " + respounceInfo +" " + reType ;
     }
 }

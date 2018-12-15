@@ -1,37 +1,46 @@
 package Devices;
-
-import Message_.Respounce;
-import Message_.gateWay;
-import Message_.ip_id_type;
-
+import FIles.Respounce;
+import FIles.gateWay;
+import FIles.ip_id_type;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Title: BasicFunction.java
+ * Description: this class is the basic function that use to process the .txt file.
+ * @author Jie Ji
+ * @version 1.0
+ */
 public class BasicFunction {
-    public String gateWay_file = "/home/jijie/IdeaProjects/first/src/FIles/gateWay.txt";
-    public String ip_id_t_file = "/home/jijie/IdeaProjects/first/src/FIles/ip_id_type.txt";
-    public String respouncse_file = "/home/jijie/IdeaProjects/first/src/FIles/respounce.txt";
 
-    public BasicFunction() {
-    }
+    public String gateWay_file = "../Self-Service-Bar-Device-Controller/src/main/java/FIles/gateWay.txt";
+    public String ip_id_t_file = "../Self-Service-Bar-Device-Controller/src/main/java/FIles/ip_id_type.txt";
+    public String respouncse_file = "../Self-Service-Bar-Device-Controller/src/main/java/FIles/respounce.txt";
 
-    public void WriteFiles_append(String line, String fileName) {
+    public BasicFunction() {    }
 
-        FileWriter fw = null; //
+    /**
+     *
+     * @param line
+     * @param fileName
+     */
+    public void WriteFiles_append(String line, String fileName){
+
+        FileWriter fw=null; //
         try {
-            File file = new File(fileName);
-            fw = new FileWriter(file, true);//
-            fw.write(line + "\r\n");
+            File file=new File(fileName);
+            fw=new FileWriter(file,true);//
+            fw.write(line+"\r\n");
             fw.flush();//
 
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
+        }finally{
             //
             try {
-                if (fw != null)
+                if(fw!=null)
                     fw.close();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -39,27 +48,33 @@ public class BasicFunction {
         }
     }
 
-    public Map<String, String> id_ip(String id, String type) {
-        Map<String, String> map = new HashMap<>();
+    /**
+     *
+     * @param id
+     * @param type
+     * @return
+     */
+    public Map<String,String> id_ip(String id, String type){
+        Map<String,String> map = new HashMap<>();
         ArrayList<String> lines = readFiles(ip_id_t_file);
         ArrayList<ip_id_type> id_ip = StrToip_id(lines);
-        for (ip_id_type dp : id_ip) {
-            if (dp.getDeviceNo() == Integer.valueOf(id) && dp.getType().contains(type)) {
-                map.put("Ip", dp.getIP());
-                map.put("DeviceId", dp.getDeviceID());
-                map.put("port", String.valueOf(dp.getPort()));
+        for(ip_id_type dp : id_ip){
+            if(dp.getDeviceNo()==Integer.valueOf(id)&&dp.getType().contains(type)){
+                map.put("Ip",dp.getIP());
+                map.put("DeviceId",dp.getDeviceID());
+                map.put("port",String.valueOf(dp.getPort()));
 
             }
         }
         return map;
     }
 
-    public int generateResult(String message, int type) {
-        int result = 0;
-        return result;
-    }
-
-    public ArrayList<String> readFiles(String fileName) {
+    /**
+     *
+     * @param fileName
+     * @return
+     */
+    public ArrayList<String> readFiles(String fileName){
         ArrayList<String> lines = new ArrayList<String>();
         File file = new File(fileName);
 
@@ -69,41 +84,49 @@ public class BasicFunction {
             reader = new BufferedReader(new FileReader(file));
             String tempString = null;
 
-            while ((tempString = reader.readLine()) != null) {
+            while ((tempString = reader.readLine())!=null){
                 lines.add(tempString);
             }
 
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             e.printStackTrace();
-        } finally {
+        }
+        finally {
             if (reader != null) {
                 try {
                     reader.close();
-                } catch (IOException e1) {
                 }
+                catch (IOException e1)
+                {    }
             }
         }
         return lines;
     }
 
-    public void WriteFiles(ArrayList<String> lines, String fileName) {
+    /**
+     *
+     * @param lines
+     * @param fileName
+     */
+    public void WriteFiles(ArrayList <String> lines,String fileName){
 
-        FileWriter fw = null; //
+        FileWriter fw=null; //
         try {
-            File file = new File(fileName);
-            fw = new FileWriter(file);//
+            File file=new File(fileName);
+            fw=new FileWriter(file);//
 
-            for (int i = 0; i < lines.size(); i++) {
-                fw.write(lines.get(i) + "\r\n");
+            for(int i = 0;i<lines.size();i++){
+                fw.write(lines.get(i)+"\r\n");
                 fw.flush();//
             }
 
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
+        }finally{
 
             try {
-                if (fw != null)
+                if(fw!=null)
                     fw.close();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -111,30 +134,38 @@ public class BasicFunction {
         }
     }
 
-    public void Delete(String ID, int type1, String type_d) {
+    /**
+     *
+     * @param ID
+     * @param type1
+     * @param type_d
+     */
+    public void Delete (String ID,int type1,String type_d){
         int i = 0;
         ArrayList<String> lines = new ArrayList<>();
         String fileName = "";
-        switch (type1) {
-            case 1: {
+        switch (type1){
+            case 1:
+            {
                 fileName = ip_id_t_file;
                 lines = readFiles(fileName);
-                for (String line : lines) {
-                    if (line.contains(ID))
+                for(String line:lines){
+                    if(line.contains(ID))
                         lines.remove(i);
                     i++;
                 }
                 break;
             }
-            case 2: {
+            case 2:
+            {
                 fileName = respouncse_file;
                 lines = readFiles(fileName);
 
-                String Did = id_ip(ID, type_d).get("DeviceId");
+                String Did = id_ip(ID,type_d).get("DeviceId");
 
-                if (Did != "") {
-                    for (String line : lines) {
-                        if (line.contains(Did))
+                if(Did!=""){
+                    for(String line:lines){
+                        if(line.contains(Did))
                             lines.remove(i);
                         i++;
                     }
@@ -144,66 +175,81 @@ public class BasicFunction {
             }
         }
 
-        WriteFiles(lines, fileName);
+        WriteFiles(lines,fileName);
 
     }
 
-    public ArrayList<ip_id_type> StrToip_id(ArrayList<String> strs) {
+    /**
+     *
+     * @param strs
+     * @return
+     */
+    public ArrayList<ip_id_type> StrToip_id(ArrayList<String> strs){
         ArrayList<ip_id_type> arrayList = new ArrayList<>();
 
-        for (String str : strs) {
+        for(String str : strs){
             String arr[] = str.split(" ");
             String info[] = new String[5];
             int i = 0;
-            for (String a : arr) {
-                if (a.length() != 0) {
+            for(String a:arr ){
+                if(a.length()!=0) {
                     info[i] = a;
                     i++;
                 }
             }
-            ip_id_type pdt = new ip_id_type(Integer.valueOf(info[0]), info[1], Integer.valueOf(info[2])
-                    , info[3], info[4]);
+            ip_id_type pdt = new ip_id_type(Integer.valueOf(info[0]),info[1],Integer.valueOf(info[2])
+                    ,info[3],info[4]);
             arrayList.add(pdt);
         }
         return arrayList;
     }
 
-    public ArrayList<gateWay> StrToGateWay(ArrayList<String> strs) {
+    /**
+     *
+     * @param strs
+     * @return
+     */
+    public ArrayList<gateWay> StrToGateWay(ArrayList<String> strs){
         ArrayList<gateWay> arrayList = new ArrayList<>();
 
-        for (String str : strs) {
+        for(String str : strs){
             String arr[] = str.split(" ");
             String info[] = new String[5];
             int i = 0;
-            for (String a : arr) {
-                if (a.length() != 0) {
-                    info[i] = a;
+            for(String a:arr ){
+                if(a.length()!=0) {
+                    info[i] =a;
                     i++;
                 }
             }
-            gateWay pdt = new gateWay(info[0], info[1], Integer.valueOf(info[2])
-                    , info[3]);
+            gateWay pdt = new gateWay(info[0],info[1],Integer.valueOf(info[2])
+                    ,info[3]);
             arrayList.add(pdt);
         }
         return arrayList;
     }
 
-    public ArrayList<Respounce> StrToResp(ArrayList<String> strs) {
+    /**
+     *
+     * @param strs
+     * @return
+     */
+    public ArrayList<Respounce> StrToResp(ArrayList<String> strs){
         ArrayList<Respounce> arrayList = new ArrayList<>();
 
-        for (String str : strs) {
+        for(String str : strs){
             String arr[] = str.split(" ");
             String info[] = new String[6];
             int i = 0;
-            for (String a : arr) {
-                if (a.length() != 0) {
-                    info[i] = a;
+            for(String a:arr ){
+                if(a.length()!=0) {
+                    info[i] =a;
                     i++;
                 }
             }
-            Respounce pdt = new Respounce(Integer.valueOf(info[0]), info[1],
+            Respounce pdt = new Respounce(Integer.valueOf(info[0]),info[1],
                     Integer.valueOf(info[2])
-                    , info[3], Integer.valueOf(info[4]), info[5]);
+                    ,info[3],Integer.valueOf(info[4]),info[5]);
             arrayList.add(pdt);
         }
         return arrayList;

@@ -1,13 +1,17 @@
-package Message_;
-
+package FIles;
+/**
+ * Title: gateWay.java
+ * Description: this class is object of the gateway it contain the information of the gateWay.txt.
+ * @author Jie Ji
+ * @version 1.0
+ */
 public class gateWay {
     String gateID;
     String ip;
     int port;
     String infos;
 
-    public gateWay() {
-    }
+    public gateWay() {    }
 
     public gateWay(String gateID, String ip, int port, String infos) {
         this.gateID = gateID;

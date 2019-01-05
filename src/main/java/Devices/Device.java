@@ -18,7 +18,7 @@ public interface Device   {
     ArrayList<Map<String,String>> searchD(ArrayList<String> infos);
 
     /**
-     * this method is used to add new device in the system
+     * this method is used to add new device int the system
      * @return the result of add the device
      */
     boolean AddNewD() ;
@@ -73,4 +73,4 @@ public interface Device   {
      */
     Map<String,String> getRecentState(int id, String type);
 
-}
+   }

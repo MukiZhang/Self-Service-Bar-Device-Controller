@@ -1,4 +1,4 @@
-package Message_;
+package Message_.chair;
 
 public class C_request {
 
@@ -10,8 +10,7 @@ public class C_request {
     String data1;
     String data2;
 
-    public C_request() {
-    }
+    public C_request(){ }
 
     public C_request(String ID, String type, String rw, String index, String subIndex, String data1, String data2) {
         this.ID = ID;
@@ -81,6 +80,6 @@ public class C_request {
 
     @Override
     public String toString() {
-        return ID + type + rw + index + subIndex + data1 + data2;
+        return  ID +  type + rw +index + subIndex + data1 + data2;
     }
 }

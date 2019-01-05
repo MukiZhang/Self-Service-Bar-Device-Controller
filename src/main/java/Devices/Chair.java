@@ -1,5 +1,9 @@
 package Devices;
 
+import Message_.Clinet;
+import Message_.light.light_getM;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,6 +14,27 @@ import java.util.Map;
  * @version 1.0
  */
 public class Chair extends BasicFunction implements Device{
+//    public int init() throws IOException {
+//        int resu = 1;
+//        String host = "255.255.255.255";// 广播地址
+//        int port = 8000;// 广播的目的端口
+//
+//        String sMessage ="{\"Command\":\"RequestTcp\"}";
+//        Clinet c = new Clinet();
+//        String resMes = c.BroadCast(host,port,sMessage).replace("\n","").replace("\t","");
+//        if(resMes ==null){
+//            resu = 0;
+//        }
+//        else{
+//            Map<String,Object> result =  new light_getM().StringToMap(resMes);
+//            String gateWay = "G001"+" "+result.get("Ip")+" "+result.get("Port")+" "+"Light"+" "+result.toString().replace(" ","-");
+//            ArrayList<String> arrayList = new ArrayList<>();
+//            arrayList.add(gateWay);
+//
+//            WriteFiles(arrayList,gateWay_file);
+//        }
+//        return resu;
+//    }
     @Override
     public boolean AddNewD() {
         ArrayList<String> infos =new  ArrayList<>();
@@ -28,6 +53,10 @@ public class Chair extends BasicFunction implements Device{
 
         return true;
     }
+    /**
+     *
+     *
+     */
     @Override
     public boolean openD(String ids) {
 
@@ -39,6 +68,11 @@ public class Chair extends BasicFunction implements Device{
         return true;
     }
 
+    /**
+     *
+     * @param powerID
+     * @return
+     */
     public boolean powerOn(int powerID){
 
         return true;

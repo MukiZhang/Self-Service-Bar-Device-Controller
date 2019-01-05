@@ -1,4 +1,4 @@
-package Message_;
+package Message_.chair;
 
 public class C_respounse {
 
@@ -9,10 +9,9 @@ public class C_respounse {
     String subIndex;
     String data;
 
-    public C_respounse() {
-    }
+    public C_respounse() { }
 
-    public C_respounse(String ID, String type, String rw, String index, String subIndex, String data) {
+    public C_respounse(String ID, String type, String rw, String index, String subIndex, String data){
         this.data = data;
         this.ID = ID;
         this.index = index;

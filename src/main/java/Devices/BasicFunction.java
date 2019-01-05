@@ -1,9 +1,13 @@
 package Devices;
-import FIles.Respounce;
+import FIles.Response;
 import FIles.gateWay;
 import FIles.ip_id_type;
+import cn.yuhi.dto.MimeMessageDTO;
+import cn.yuhi.util.MailUtil;
+
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,10 +19,10 @@ import java.util.Map;
  */
 public class BasicFunction {
 
-    public String gateWay_file = "../Self-Service-Bar-Device-Controller/src/main/java/FIles/gateWay.txt";
-    public String ip_id_t_file = "../Self-Service-Bar-Device-Controller/src/main/java/FIles/ip_id_type.txt";
-    public String respouncse_file = "../Self-Service-Bar-Device-Controller/src/main/java/FIles/respounce.txt";
-
+    protected String gateWay_file = "../first/src/FIles/gateWay.txt";
+    protected String ip_id_t_file = "../first/src/FIles/ip_id_type.txt";
+    protected String response_file = "../first/src/FIles/response.txt";
+    static protected int Error = 0;
     public BasicFunction() {    }
 
     /**
@@ -75,31 +79,18 @@ public class BasicFunction {
      * @return
      */
     public ArrayList<String> readFiles(String fileName){
-        ArrayList<String> lines = new ArrayList<String>();
+        ArrayList<String> lines = new ArrayList<>();
         File file = new File(fileName);
 
-        BufferedReader reader = null;
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String tempString;
 
-        try {
-            reader = new BufferedReader(new FileReader(file));
-            String tempString = null;
-
-            while ((tempString = reader.readLine())!=null){
+            while ((tempString = reader.readLine()) != null) {
                 lines.add(tempString);
             }
 
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
-        }
-        finally {
-            if (reader != null) {
-                try {
-                    reader.close();
-                }
-                catch (IOException e1)
-                {    }
-            }
         }
         return lines;
     }
@@ -116,8 +107,8 @@ public class BasicFunction {
             File file=new File(fileName);
             fw=new FileWriter(file);//
 
-            for(int i = 0;i<lines.size();i++){
-                fw.write(lines.get(i)+"\r\n");
+            for (String line : lines) {
+                fw.write(line + "\r\n");
                 fw.flush();//
             }
 
@@ -158,12 +149,12 @@ public class BasicFunction {
             }
             case 2:
             {
-                fileName = respouncse_file;
+                fileName = response_file;
                 lines = readFiles(fileName);
 
                 String Did = id_ip(ID,type_d).get("DeviceId");
 
-                if(Did!=""){
+                if(!Did.equals("")){
                     for(String line:lines){
                         if(line.contains(Did))
                             lines.remove(i);
@@ -229,13 +220,50 @@ public class BasicFunction {
         return arrayList;
     }
 
+    public void sendMail(Mail mail){
+
+
+        MimeMessageDTO mimeDTO = new MimeMessageDTO();
+        mimeDTO.setSentDate(new Date());
+        mimeDTO.setSubject(mail.subject);
+        switch (mail.type){
+            case 1: {//send message
+
+                mimeDTO.setText(mail.info);
+
+                if (MailUtil.sendEmail(mail.senderAdd,mail.passWord, mail.receiverAdd, mimeDTO)) {
+                    System.out.println("邮件发送成功！");
+                } else {
+                    System.out.println("邮件发送失败!!!");
+                }
+
+                break;
+            }
+            case 2:{
+                mimeDTO.setText("Please check the attachment.\n请查收附件。");
+                ArrayList<String> filepath= new ArrayList<>();
+                filepath.add(mail.info);
+                filepath.add("/home/jijie/IdeaProjects/first/src/FIles/ip_id_type.txt");
+                if (MailUtil.sendEmailByFile(mail.senderAdd, mail.passWord, mail.receiverAdd, mimeDTO,filepath)) {
+                    System.out.println("邮件发送成功！");
+                } else {
+                    System.out.println("邮件发送失败!!!");
+                }
+                //send with attachment
+                break;
+            }
+
+
+        }
+
+    }
     /**
      *
-     * @param strs
+     * @param strs the string used to change to Response object
      * @return
      */
-    public ArrayList<Respounce> StrToResp(ArrayList<String> strs){
-        ArrayList<Respounce> arrayList = new ArrayList<>();
+    public ArrayList<Response> StrToResp(ArrayList<String> strs){
+        ArrayList<Response> arrayList = new ArrayList<>();
 
         for(String str : strs){
             String arr[] = str.split(" ");
@@ -247,7 +275,7 @@ public class BasicFunction {
                     i++;
                 }
             }
-            Respounce pdt = new Respounce(Integer.valueOf(info[0]),info[1],
+            Response pdt = new Response(Integer.valueOf(info[0]),info[1],
                     Integer.valueOf(info[2])
                     ,info[3],Integer.valueOf(info[4]),info[5]);
             arrayList.add(pdt);
